@@ -102,7 +102,7 @@ Rscript plot_relatedness.R
 ### 2.5. Análise de Mistura Genética
 1. Filtre as variantes para o ADMIXTURE:
 ```sh
-zcat merged_filtered_no_indels.vcf.gz | grep -E “^chr[1-9]*($’\t’)*)|(^#*)” | grep -v “_alt” | grep -v “Un_” | grep -v “HLA” | grep -v “random” | grep -E -v “ID\=X” | grep -E -v “ID\=Y” | grep -E -v “ID\=M” | grep -E -v “EBV” | sed s’/chr//’g > merged_filtered_plink.vcf
+zcat merged_filtered_no_indels.vcf.gz | grep -E “^(chr[1-9]*($’\t’)*)|(^#*)” | grep -v “_alt” | grep -v “Un_” | grep -v “HLA” | grep -v “random” | grep -E -v “ID\=X” | grep -E -v “ID\=Y” | grep -E -v “ID\=M” | grep -E -v “EBV” | sed s’/chr//’g > merged_filtered_plink.vcf
 ```
 2. Converta o arquivo VCF para o formato PLINK:
 ```sh
