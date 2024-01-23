@@ -87,13 +87,10 @@ open VCF_quality.html
 ```sh
 vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
 ```
-2. Gere o arquivo de Relação de Parentesco:
+2. Gere o arquivo de Relação de Parentesco e plote o gráfico:
+<!-- TODO: Adicionar o script para plotar o gráfico da Relação de Parentesco -->
 ```sh
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
-```
-<!-- TODO: Adicionar o script para plotar o gráfico da Relação de Parentesco -->
-3. Plote o gráfico da Relação de Parentesco:
-```sh
 Rscript plot_relatedness.R
 ```
 ### 2.5. Análise de Mistura Genética
@@ -107,12 +104,9 @@ plink --vcf merged_filtered_plink.vcf --double-id --allow-extra-chr --set-missin
 plink --file my_plink --make-bed --out my_plink
 plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 ```
-3. Gere o arquivo de Mistura Genética:
+3. Gere o arquivo de Mistura Genética e plote o gráfico:
+<!-- TODO: Adicionar o script para plotar o gráfico da Mistura Genética -->
 ```sh
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
-```
-<!-- TODO: Adicionar o script para plotar o gráfico da Mistura Genética -->
-4. Plote o gráfico da Mistura Genética:
-```sh
 Rscript plot_admixture.R
 ```
