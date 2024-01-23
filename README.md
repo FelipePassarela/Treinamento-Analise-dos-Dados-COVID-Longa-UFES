@@ -26,6 +26,7 @@ sudo apt install git
 sudo apt install openjdk-17-jre
 sudo apt install wget
 sudo apt install xdg-utils
+sudo apt install r-base
 ```
 2. Crie e se conecte a um ambiente virtual do Anaconda:
 ```sh
@@ -78,7 +79,7 @@ java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quali
 > [!IMPORTANT]
 >  O arquivo FASTA (.fa) precisa ter a mesma versão do genoma da chamada de variantes
 
-2. Abra o arquivo VCF_quality.html no navegador para visualizar a análise de qualidade de variantes.
+2. Abra o arquivo VCF_quality.html no navegador para visualizar a análise de qualidade de variantes:
 ```sh
 open VCF_quality.html
 ```
