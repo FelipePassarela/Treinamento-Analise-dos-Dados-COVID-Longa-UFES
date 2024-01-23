@@ -44,10 +44,6 @@ conda install -c bioconda admixture
 ```sh
 wget https://github.com/BimberLab/DISCVRSeq/releases/download/1.3.62/DISCVRSeq-1.3.62.jar
 ```
-2. Abra o terminal e digite o seguinte comando:
-```sh
-java -jar DISCVRSeq-1.3.62.jar
-```
 ### 1.4. Instalação do NgsRelate
 1. Abra o terminal no diretório do projeto e digite os seguintes comandos:
 ```sh
