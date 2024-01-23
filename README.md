@@ -1,5 +1,6 @@
 # Treinamento-Analise-dos-Dados-COVID-Longa-UFES
 Esse repositório contém instruções para análise dos dados do projeto COVID Longa da Universidade Federal do Espírito Santo (UFES).
+
 Todo o treinamento foi realizado no sistema operacional Linux na distribuição Ubuntu.
 
 ## 1. Instalação das ferramentas
