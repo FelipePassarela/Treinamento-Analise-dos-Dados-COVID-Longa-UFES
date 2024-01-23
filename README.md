@@ -101,7 +101,7 @@ Rscript plot_relatedness.R
 ```sh
 zcat merged_filtered_no_indels.vcf.gz | grep -E "^(chr[1-9]*($'\t')*)|(^#*)" | grep -v "_alt" | grep -v "Un_" | grep -v "HLA" | grep -v "random" | grep -E -v "ID\=X" | grep -E -v "ID\=Y" | grep -E -v "ID\=M" | grep -E -v "EBV" | sed s'/chr//'g > merged_filtered_plink.vcf
 ```
-2. Converta o arquivo VCF para o formato PLINK:
+2. Converta o arquivo VCF para o formato BED:
 ```sh
 plink --vcf merged_filtered_plink.vcf --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --recode --out my_plink
 plink --file my_plink --make-bed --out my_plink
