@@ -38,6 +38,7 @@ conda activate covid-longa
 conda install -c bioconda bcftools
 conda install -c bioconda vcftools
 conda install -c bioconda plink
+conda install -c bioconda plink2
 conda install -c bioconda admixture
 ```
 ### 1.3. Instalação do DISCVRSeq
