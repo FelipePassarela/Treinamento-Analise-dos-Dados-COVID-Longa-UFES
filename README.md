@@ -6,8 +6,6 @@ O treinamento abrange a instalação e uso de várias ferramentas de bioinformá
 Todo o treinamento foi realizado no sistema operacional Linux, em específico na distribuição Ubuntu.
 <br>
 
-<br>
-
 # 1. Instalação das ferramentas
 ## 1.1. Instalação do Conda
 
@@ -26,7 +24,6 @@ chmod +x Anaconda3-2020.11-Linux-x86_64.sh
 ```sh
 conda --version
 ```
-<br>
 
 ## 1.2 Instalação dos pacotes necessários
 
@@ -82,8 +79,6 @@ devtools::install_github("cran/hdpca", dependencies = TRUE)
 q()
 ```
 
-<br>
-
 ## 1.3 Instalação das ferramentas de análise de dados e bioinformática
 
 Algumas ferramentas científicas necessárias não estão disponíveis no Conda, portanto, você precisará instalá-las manualmente. Para isso, siga os passos abaixo:
@@ -133,12 +128,9 @@ bcftools merge -l merge.txt -Oz -o merged.vcf.gz
 bcftools index -t merged.vcf.gz
 ```
 
-<br>
-
 ## 2.2. Execução dos programas de análise de amostras
 
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
-<br>
 
 ### 2.2.1 Análise de qualidade das amostras
 1. Gere o arquivo HTML com a análise de qualidade de variantes:
@@ -152,7 +144,6 @@ java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quali
 ```sh
 open VCF_quality.html
 ```
-<br>
 
 ### 2.2.2 Análise da relação de parentesco
 1. Filtre as variantes:
@@ -165,7 +156,6 @@ vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
 Rscript plot_relatedness.R
 ```
-<br>
 
 ### 2.2.3 Análise de mistura genética
 1. Filtre as variantes para o ADMIXTURE:
@@ -184,7 +174,6 @@ plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
 Rscript plot_admixture.R
 ```
-<br>
 
 ### 2.2.4 Análise de ancestralidade
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
