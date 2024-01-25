@@ -26,8 +26,6 @@ chmod +x Anaconda3-2020.11-Linux-x86_64.sh
 ```sh
 conda --version
 ```
-
----
 <br>
 
 ## 1.2 Instalação dos pacotes necessários
@@ -83,7 +81,7 @@ devtools::install_github("cran/hdpca", dependencies = TRUE)
 ```r
 q()
 ```
----
+
 <br>
 
 ## 1.3 Instalação das ferramentas de análise de dados e bioinformática
@@ -110,7 +108,7 @@ git clone https://github.com/daviddaiweizhang/fraposa.git
 ```
 <br>
 
----
+
 <br>
 
 # 2. Análise dos dados
@@ -137,7 +135,7 @@ ls *.vcf > merge.txt
 bcftools merge -l merge.txt -Oz -o merged.vcf.gz
 bcftools index -t merged.vcf.gz
 ```
----
+
 <br>
 
 ## 2.2. Execução dos programas de análise de amostras
