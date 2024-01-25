@@ -136,17 +136,13 @@ bcftools index -t merged.vcf.gz
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
 
 ### 2.2.1 Análise de qualidade das amostras
-1. Gere o arquivo HTML com a análise de qualidade de variantes:
+1. Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo:
 ```sh
 java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
+open VCF_quality.html
 ```
 > [!IMPORTANT]
 > O arquivo FASTA `.fa` precisa ter a mesma versão do genoma da chamada de variantes
-
-2. Abra o arquivo `VCF_quality.html` no navegador para visualizar a análise de qualidade de variantes:
-```sh
-open VCF_quality.html
-```
 
 ### 2.2.2 Análise da relação de parentesco
 1. Filtre as variantes:
