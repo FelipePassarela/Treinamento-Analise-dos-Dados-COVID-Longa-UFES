@@ -129,6 +129,7 @@ ls *.vcf > merge.txt
 bcftools merge -l merge.txt -Oz -o merged.vcf.gz
 bcftools index -t merged.vcf.gz
 ```
+<br>
 
 ## 2.2. Execução dos programas de análise de amostras
 
