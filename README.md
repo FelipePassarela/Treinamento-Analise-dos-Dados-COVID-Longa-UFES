@@ -159,7 +159,7 @@ open VCF_quality.html
 ```
 <br>
 
-#### 2.2.2 Análise da Relação de Parentesco
+#### 2.2.2 Análise da relação de parentesco
 1. Filtre as variantes:
 ```sh
 vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
@@ -172,7 +172,7 @@ Rscript plot_relatedness.R
 ```
 <br>
 
-#### 2.2.3 Análise de Mistura Genética
+#### 2.2.3 Análise de mistura genética
 1. Filtre as variantes para o ADMIXTURE:
 ```sh
 zcat merged_filtered_no_indels.vcf.gz | grep -E "^(chr[1-9]*($'\t')*)|(^#*)" | grep -v "_alt" | grep -v "Un_" | grep -v "HLA" | grep -v "random" | grep -E -v "ID\=X" | grep -E -v "ID\=Y" | grep -E -v "ID\=M" | grep -E -v "EBV" | sed s'/chr//'g > merged_filtered_plink.vcf
