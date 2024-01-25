@@ -143,6 +143,7 @@ bcftools index -t merged.vcf.gz
 ### 2.2. Execução dos programas de análise de amostras
 
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
+<br>
 
 #### 2.2.1 Análise de qualidade das amostras
 1. Gere o arquivo HTML com a análise de qualidade de variantes:
