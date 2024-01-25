@@ -154,6 +154,8 @@ java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quali
 ```sh
 open VCF_quality.html
 ```
+<br>
+
 #### 2.2.2 Análise da Relação de Parentesco
 1. Filtre as variantes:
 ```sh
@@ -165,6 +167,8 @@ vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
 Rscript plot_relatedness.R
 ```
+<br>
+
 #### 2.2.3 Análise de Mistura Genética
 1. Filtre as variantes para o ADMIXTURE:
 ```sh
@@ -182,6 +186,8 @@ plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
 Rscript plot_admixture.R
 ```
+<br>
+
 #### 2.2.4 Análise de ancestralidade
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
 ```sh
