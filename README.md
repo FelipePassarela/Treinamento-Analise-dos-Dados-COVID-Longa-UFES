@@ -1,27 +1,39 @@
 # Treinamento de Análise dos Dados do Projeto COVID Longa UFES
 Esse repositório contém instruções para análise dos dados do projeto COVID Longa da Universidade Federal do Espírito Santo (UFES).
 
-Todo o treinamento foi realizado no sistema operacional Linux, na distribuição Ubuntu.
+O treinamento abrange a instalação e uso de várias ferramentas de bioinformática e ciência de dados, incluindo Conda, bcftools, vcftools, PLINK, Admixture, e bibliotecas Python como numpy, pandas, scikit-learn, matplotlib e rpy2. 
 
+Todo o treinamento foi realizado no sistema operacional Linux, em específico na distribuição Ubuntu.
+<br>
 
 ## 1. Instalação das ferramentas
-### 1.1. Instalação do Anaconda
-1. Baixe o Anaconda pelo link (Certifique-se de baixar a versão para Linux): https://www.anaconda.com/products/individual
+### 1.1. Instalação do Conda
+
+Conda é um gerenciador de pacotes e sistema de gerenciamento de ambiente de código aberto, que inclui uma grande variedade de ferramentas úteis para análise de dados e bioinformática. O Anaconda é uma distribuição do Conda que inclui o Python e mais de 1500 outros pacotes. Para instalá-lo, siga os seguintes passos:
+
+1. Baixe o Conda pelo link (Certifique-se de baixar a versão para Linux): https://www.anaconda.com/products/individual
 2. Abra o terminal e digite os seguintes comandos:
 ```sh
 cd Downloads/
 chmod +x Anaconda3-2020.11-Linux-x86_64.sh
 ./Anaconda3-2020.11-Linux-x86_64.sh
 ```
-3. Siga as instruções de instalação do Anaconda.
+3. Siga as instruções de instalação do Conda.
 4. Após a instalação, feche o terminal e abra novamente.
-5. Digite o seguinte comando para verificar se o Anaconda foi instalado corretamente:
+5. Digite o seguinte comando para verificar se o Conda foi instalado corretamente:
 ```sh
 conda --version
 ```
+<br>
+
+---
+<br>
 
 ### 1.2 Instalação dos pacotes necessários
-1. Instale os pacotes básicos:
+
+Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
+
+#### 1.2.1 Instale os pacotes básicos
 ```sh
 sudo apt update
 sudo apt install g++
@@ -33,12 +45,13 @@ sudo apt install python3
 sudo apt install python3-pip
 python3 -m pip install --upgrade pip
 ```
-2. Crie e se conecte a um ambiente virtual do Anaconda:
+#### 1.2.2 Ambiente virtual do Conda
+1. Crie e se conecte a um ambiente virtual Conda:
 ```sh
 conda create -n covid-longa python=3.11
 conda activate covid-longa
 ```
-3. Instale os pacotes de bioinformática no ambiente virtual:
+2. Instale os pacotes de bioinformática no ambiente virtual:
 ```sh
 conda install -c bioconda bcftools
 conda install -c bioconda vcftools
@@ -47,7 +60,7 @@ conda install -c bioconda plink2
 conda install -c bioconda admixture
 pip install pyplink
 ```
-4. Instale os pacotes de ciência de dados no ambiente virtual:
+3. Instale os pacotes de ciência de dados no ambiente virtual:
 ```sh
 conda install numpy
 conda install pandas
@@ -56,39 +69,49 @@ conda install matplotlib
 conda install rpy2
 conda install -c r r-devtools
 ```
-5. Inicialize o R:
+4. Inicialize o R:
 ```sh
 R
 ```
-6. Instale o pacote hdpca:
+5. Instale o pacote `hdpca`:
 ```r
 devtools::install_github("cran/hdpca", dependencies = TRUE)
 ```
-7. Saia do R:
+6. Saia do R:
 ```r
 q()
 ```
+<br>
 
-### 1.3. Instalação do DISCVRSeq
-1. Abra o terminal no diretório do projeto e digite os seguintes comandos (ou baixe o arquivo pelo mesmo link e coloque-o no diretório do projeto):
+---
+<br>
+
+### 1.3 Instalação das ferramentas de análise de dados e bioinformática
+
+Algumas ferramentas científicas necessárias não estão disponíveis no Conda, portanto, você precisará instalá-las manualmente. Para isso, siga os passos abaixo:
+
+#### 1.3.1 Instalação do DISCVRSeq
+Abra o terminal no diretório do projeto e digite os seguintes comandos (ou baixe o arquivo pelo mesmo link e coloque-o no diretório do projeto):
 ```sh
 wget https://github.com/BimberLab/DISCVRSeq/releases/download/1.3.62/DISCVRSeq-1.3.62.jar
 ```
-
-### 1.4. Instalação do NgsRelate
-1. Abra o terminal no diretório do projeto e digite os seguintes comandos:
+#### 1.3.2 Instalação do NgsRelate
+Abra o terminal no diretório do projeto e digite os seguintes comandos:
 ```sh
 git clone --recursive https://github.com/SAMtools/htslib
 git clone https://github.com/ANGSD/ngsRelate
 cd htslib/;make -j2;cd ../ngsRelate;make HTSSRC=../htslib/
 cd ..
 ```
-
-### 1.5 Instalação do FRAPOSA
-1. Abra o terminal no diretório do projeto e digite os seguintes comandos:
+#### 1.3.3 Instalação do FRAPOSA
+Abra o terminal no diretório do projeto e digite os seguintes comandos:
 ```sh
 git clone https://github.com/daviddaiweizhang/fraposa.git
 ```
+<br>
+
+---
+<br>
 
 ## 2. Análise dos dados
 ### 2.1. Configurações iniciais
@@ -97,6 +120,8 @@ git clone https://github.com/daviddaiweizhang/fraposa.git
 ```sh
 conda activate covid-longa
 ```
+---
+<br>
 
 ### 2.2. Merge dos arquivos VCF
 1. Crie um arquivo de texto `merge.txt` com os nomes de todos VCF:
@@ -108,6 +133,8 @@ ls *.vcf > merge.txt
 bcftools merge -l merge.txt -Oz -o merged.vcf.gz
 bcftools index -t merged.vcf.gz
 ```
+---
+<br>
 
 ### 2.3. Análise de qualidade de variantes
 1. Gere o arquivo HTML com a análise de qualidade de variantes:
@@ -121,6 +148,8 @@ java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quali
 ```sh
 open VCF_quality.html
 ```
+---
+<br>
 
 ### 2.4. Análise da Relação de Parentesco
 1. Filtre as variantes:
@@ -133,6 +162,8 @@ vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
 Rscript plot_relatedness.R
 ```
+---
+<br>
 
 ### 2.5. Análise de Mistura Genética
 1. Filtre as variantes para o ADMIXTURE:
@@ -151,9 +182,10 @@ plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
 Rscript plot_admixture.R
 ```
+---
+<br>
 
-### 2.5 Previsão de ancestralidade
-:construction: **AVISO: Essa seção atualmente está em construção e pode conter erros.** :construction:\
+### 2.6 Análise de ancestralidade
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
 ```sh
 wget -O all_hg38.psam "https://www.dropbox.com/s/2e87z6nc4qexjjm/hg38_corrected.psam?dl=1"
@@ -168,7 +200,7 @@ plink2 --pfile all_hg38 vzs --min-alleles 2 --max-alleles 2 --allow-extra-chr --
 plink2 --bfile all_hg38_autosomes allow-extra-chr --set-all-var-ids @:# --make-bed --out thousandGenomes_renamed
 cat all_hg38.psam | awk '{print $1"\t"$1"\t"$5}' > outputThousand.popu
 ```
-3. Gere os arquivos de Previsão de ancestralidade:
+3. Gere os arquivos de análise de ancestralidade:
 ```sh
 ./fraposa/commvar.sh thousandGenomes_renamed my_plink_missing outputThousand outputMySamples
 ./fraposa/fraposa_runner.py --stu_filepref outputMySamples outputThousand
@@ -177,7 +209,7 @@ cat all_hg38.psam | awk '{print $1"\t"$1"\t"$5}' > outputThousand.popu
 > [!IMPORTANT]
 > Se você executou o FRAPOSA anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros
 > você precisa excluir os arquivos intermediários `.dat`, caso contrário o FRAPOSA irá gerar um erro.
-4. Plote o gráfico da Previsão de ancestralidade:
+4. Plote o gráfico da análise de ancestralidade:
 ```sh	
 ./fraposa/plotpcs.py outputThousand outputMySamples
 ```
