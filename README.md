@@ -136,7 +136,7 @@ bcftools index -t merged.vcf.gz
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
 
 ### 2.2.1 Análise de qualidade das amostras
-1. Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo:
+Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo:
 ```sh
 java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
 open VCF_quality.html
