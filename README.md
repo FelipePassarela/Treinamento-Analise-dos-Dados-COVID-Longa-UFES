@@ -6,6 +6,8 @@ O treinamento abrange a instalação e uso de várias ferramentas de bioinformá
 Todo o treinamento foi realizado no sistema operacional Linux, em específico na distribuição Ubuntu.
 <br>
 
+<br>
+
 ## 1. Instalação das ferramentas
 ### 1.1. Instalação do Conda
 
