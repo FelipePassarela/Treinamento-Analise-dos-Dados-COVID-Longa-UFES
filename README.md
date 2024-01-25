@@ -154,6 +154,7 @@ Rscript plot_admixture.R
 
 ### 2.5 Previsão de ancestralidade
 :construction: **AVISO: Essa seção atualmente está em construção e pode conter erros.** :construction:
+
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
 ```sh
 wget -O all_hg38.psam "https://www.dropbox.com/s/2e87z6nc4qexjjm/hg38_corrected.psam?dl=1"
