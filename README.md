@@ -8,8 +8,8 @@ Todo o treinamento foi realizado no sistema operacional Linux, em específico na
 
 <br>
 
-## 1. Instalação das ferramentas
-### 1.1. Instalação do Conda
+# 1. Instalação das ferramentas
+## 1.1. Instalação do Conda
 
 Conda é um gerenciador de pacotes e sistema de gerenciamento de ambiente de código aberto, que inclui uma grande variedade de ferramentas úteis para análise de dados e bioinformática. O Anaconda é uma distribuição do Conda que inclui o Python e mais de 1500 outros pacotes. Para instalá-lo, siga os seguintes passos:
 
@@ -30,11 +30,11 @@ conda --version
 ---
 <br>
 
-### 1.2 Instalação dos pacotes necessários
+## 1.2 Instalação dos pacotes necessários
 
 Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
 
-#### 1.2.1 Instale os pacotes básicos
+### 1.2.1 Instale os pacotes básicos
 Digite os seguintes comandos no terminal:
 ```sh
 sudo apt update
@@ -47,7 +47,7 @@ sudo apt install python3
 sudo apt install python3-pip
 python3 -m pip install --upgrade pip
 ```
-#### 1.2.2 Ambiente virtual do Conda
+### 1.2.2 Ambiente virtual do Conda
 1. Crie e se conecte a um ambiente virtual Conda:
 ```sh
 conda create -n covid-longa python=3.11
@@ -86,16 +86,16 @@ q()
 ---
 <br>
 
-### 1.3 Instalação das ferramentas de análise de dados e bioinformática
+## 1.3 Instalação das ferramentas de análise de dados e bioinformática
 
 Algumas ferramentas científicas necessárias não estão disponíveis no Conda, portanto, você precisará instalá-las manualmente. Para isso, siga os passos abaixo:
 
-#### 1.3.1 Instalação do DISCVRSeq
+### 1.3.1 Instalação do DISCVRSeq
 Abra o terminal no diretório do projeto e digite os seguintes comandos (ou baixe o arquivo pelo mesmo link e coloque-o no diretório do projeto):
 ```sh
 wget https://github.com/BimberLab/DISCVRSeq/releases/download/1.3.62/DISCVRSeq-1.3.62.jar
 ```
-#### 1.3.2 Instalação do NgsRelate
+### 1.3.2 Instalação do NgsRelate
 Abra o terminal no diretório do projeto e digite os seguintes comandos:
 ```sh
 git clone --recursive https://github.com/SAMtools/htslib
@@ -103,7 +103,7 @@ git clone https://github.com/ANGSD/ngsRelate
 cd htslib/;make -j2;cd ../ngsRelate;make HTSSRC=../htslib/
 cd ..
 ```
-#### 1.3.3 Instalação do FRAPOSA
+### 1.3.3 Instalação do FRAPOSA
 Abra o terminal no diretório do projeto e digite os seguintes comandos:
 ```sh
 git clone https://github.com/daviddaiweizhang/fraposa.git
@@ -113,21 +113,21 @@ git clone https://github.com/daviddaiweizhang/fraposa.git
 ---
 <br>
 
-## 2. Análise dos dados
+# 2. Análise dos dados
 
 Depois de instalar todas as ferramentas e dependências necessárias, você pode iniciar a análise dos dados.
 
-### 2.1 Configurações iniciais
+## 2.1 Configurações iniciais
 
 Primeiro, ative o ambiente virtual Conda (se não estiver ativo) e faça o merge dos arquivos VCF em um único só.
 
-#### 2.1.1 Ativação do ambiente virtual Conda
+### 2.1.1 Ativação do ambiente virtual Conda
 Abra o terminal no diretório do projeto e digite o seguinte comando:
 ```sh
 conda activate covid-longa
 ```
 
-#### 2.1.2 Merge dos arquivos VCF
+### 2.1.2 Merge dos arquivos VCF
 1. Crie um arquivo de texto `merge.txt` com os nomes de todos VCF:
 ```sh
 ls *.vcf > merge.txt
@@ -140,12 +140,12 @@ bcftools index -t merged.vcf.gz
 ---
 <br>
 
-### 2.2. Execução dos programas de análise de amostras
+## 2.2. Execução dos programas de análise de amostras
 
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
 <br>
 
-#### 2.2.1 Análise de qualidade das amostras
+### 2.2.1 Análise de qualidade das amostras
 1. Gere o arquivo HTML com a análise de qualidade de variantes:
 ```sh
 java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
@@ -159,7 +159,7 @@ open VCF_quality.html
 ```
 <br>
 
-#### 2.2.2 Análise da relação de parentesco
+### 2.2.2 Análise da relação de parentesco
 1. Filtre as variantes:
 ```sh
 vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
@@ -172,14 +172,14 @@ Rscript plot_relatedness.R
 ```
 <br>
 
-#### 2.2.3 Análise de mistura genética
+### 2.2.3 Análise de mistura genética
 1. Filtre as variantes para o ADMIXTURE:
 ```sh
 zcat merged_filtered_no_indels.vcf.gz | grep -E "^(chr[1-9]*($'\t')*)|(^#*)" | grep -v "_alt" | grep -v "Un_" | grep -v "HLA" | grep -v "random" | grep -E -v "ID\=X" | grep -E -v "ID\=Y" | grep -E -v "ID\=M" | grep -E -v "EBV" | sed s'/chr//'g > merged_filtered_plink.vcf
 ```
 2. Converta o arquivo VCF para o formato BED:
 ```sh
-plink --vcf merged_filtered_plink.vcf --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --recode --out my_plink
+plink --vcf merged_filtered_plink.vcf --double-id --allow-extra-chr --set-missing-var-ids @: --indep-pairwise 50 10 0.1 --recode --out my_plink
 plink --file my_plink --make-bed --out my_plink
 plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 ```
@@ -191,7 +191,7 @@ Rscript plot_admixture.R
 ```
 <br>
 
-#### 2.2.4 Análise de ancestralidade
+### 2.2.4 Análise de ancestralidade
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
 ```sh
 wget -O all_hg38.psam "https://www.dropbox.com/s/2e87z6nc4qexjjm/hg38_corrected.psam?dl=1"
