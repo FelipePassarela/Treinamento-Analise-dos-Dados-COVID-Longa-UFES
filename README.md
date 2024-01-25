@@ -108,9 +108,6 @@ git clone https://github.com/daviddaiweizhang/fraposa.git
 ```
 <br>
 
-
-<br>
-
 # 2. Análise dos dados
 
 Depois de instalar todas as ferramentas e dependências necessárias, você pode iniciar a análise dos dados.
