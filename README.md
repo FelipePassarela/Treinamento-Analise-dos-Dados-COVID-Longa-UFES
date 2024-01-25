@@ -213,7 +213,7 @@ cat all_hg38.psam | awk '{print $1"\t"$1"\t"$5}' > outputThousand.popu
 ./fraposa/predstupopu.py --nneighbors 20 --weights uniform outputThousand outputMySamples
 ```
 > [!IMPORTANT]
-> Se você executou o FRAPOSA anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros
+> Se você executou o FRAPOSA anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros,
 > você precisa excluir os arquivos intermediários `.dat`, caso contrário o FRAPOSA irá gerar um erro.
 4. Plote o gráfico da análise de ancestralidade:
 ```sh	
