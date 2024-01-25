@@ -24,7 +24,6 @@ chmod +x Anaconda3-2020.11-Linux-x86_64.sh
 ```sh
 conda --version
 ```
-<br>
 
 ---
 <br>
@@ -34,6 +33,7 @@ conda --version
 Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
 
 #### 1.2.1 Instale os pacotes básicos
+Digite os seguintes comandos no terminal:
 ```sh
 sudo apt update
 sudo apt install g++
@@ -81,8 +81,6 @@ devtools::install_github("cran/hdpca", dependencies = TRUE)
 ```r
 q()
 ```
-<br>
-
 ---
 <br>
 
@@ -114,16 +112,20 @@ git clone https://github.com/daviddaiweizhang/fraposa.git
 <br>
 
 ## 2. Análise dos dados
-### 2.1. Configurações iniciais
-1. Abra o terminal no diretório do projeto.
-2. Ative o ambiente virtual Conda (se ainda não estiver ativado):
+
+Depois de instalar todas as ferramentas e dependências necessárias, você pode iniciar a análise dos dados.
+
+### 2.1 Configurações iniciais
+
+Primeiro, ative o ambiente virtual Conda (se não estiver ativo) e faça o merge dos arquivos VCF em um único só.
+
+#### 2.1.1 Ativação do ambiente virtual Conda
+Abra o terminal no diretório do projeto e digite o seguinte comando:
 ```sh
 conda activate covid-longa
 ```
----
-<br>
 
-### 2.2. Merge dos arquivos VCF
+#### 2.1.2 Merge dos arquivos VCF
 1. Crie um arquivo de texto `merge.txt` com os nomes de todos VCF:
 ```sh
 ls *.vcf > merge.txt
@@ -136,7 +138,11 @@ bcftools index -t merged.vcf.gz
 ---
 <br>
 
-### 2.3. Análise de qualidade de variantes
+### 2.2. Execução dos programas de análise de amostras
+
+Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
+
+#### 2.2.1 Análise de qualidade das amostras
 1. Gere o arquivo HTML com a análise de qualidade de variantes:
 ```sh
 java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
@@ -148,24 +154,18 @@ java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quali
 ```sh
 open VCF_quality.html
 ```
----
-<br>
-
-### 2.4. Análise da Relação de Parentesco
+#### 2.2.2 Análise da Relação de Parentesco
 1. Filtre as variantes:
 ```sh
 vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
 ```
-2. Gere o arquivo de Relação de Parentesco e plote o gráfico:
+2. Gere o arquivo de relação de parentesco e plote o gráfico:
 <!-- TODO: Adicionar o script para plotar o gráfico da Relação de Parentesco -->
 ```sh
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
 Rscript plot_relatedness.R
 ```
----
-<br>
-
-### 2.5. Análise de Mistura Genética
+#### 2.2.3 Análise de Mistura Genética
 1. Filtre as variantes para o ADMIXTURE:
 ```sh
 zcat merged_filtered_no_indels.vcf.gz | grep -E "^(chr[1-9]*($'\t')*)|(^#*)" | grep -v "_alt" | grep -v "Un_" | grep -v "HLA" | grep -v "random" | grep -E -v "ID\=X" | grep -E -v "ID\=Y" | grep -E -v "ID\=M" | grep -E -v "EBV" | sed s'/chr//'g > merged_filtered_plink.vcf
@@ -176,16 +176,13 @@ plink --vcf merged_filtered_plink.vcf --double-id --allow-extra-chr --set-missin
 plink --file my_plink --make-bed --out my_plink
 plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 ```
-3. Gere o arquivo de Mistura Genética e plote o gráfico:
+3. Gere o arquivo de mistura genética e plote o gráfico:
 <!-- TODO: Adicionar o script para plotar o gráfico da Mistura Genética -->
 ```sh
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
 Rscript plot_admixture.R
 ```
----
-<br>
-
-### 2.6 Análise de ancestralidade
+#### 2.2.4 Análise de ancestralidade
 1. Baixe o genoma de referência com o `wget` (ou acesse https://www.cog-genomics.org/plink/2.0/resources#1kg_phase3, baixe os três arquivos manualmente e renomeie-os para `all_hg38.psam`, `all_hg38.pgen.zst` e `all_hg38.pvar.zst`):
 ```sh
 wget -O all_hg38.psam "https://www.dropbox.com/s/2e87z6nc4qexjjm/hg38_corrected.psam?dl=1"
