@@ -15,8 +15,8 @@ Conda é um gerenciador de pacotes e sistema de gerenciamento de ambiente de có
 2. Abra o terminal e digite os seguintes comandos:
 ```sh
 cd Downloads/
-chmod +x Anaconda3-2020.11-Linux-x86_64.sh
-./Anaconda3-2020.11-Linux-x86_64.sh
+chmod +x Anaconda3-2023.09-0-Linux-x86_64.sh # Substitua pelo nome do arquivo baixado
+./Anaconda3-2023.09-0-Linux-x86_64.sh # Substitua pelo nome do arquivo baixado
 ```
 3. Siga as instruções de instalação do Conda.
 4. Após a instalação, feche o terminal e abra novamente.
