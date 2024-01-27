@@ -31,26 +31,23 @@ conda --version
 
 Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
 
-### 1.2.1 Instale os pacotes básicos
-Digite os seguintes comandos no terminal:
-```sh
-sudo apt update
-sudo apt install g++
-sudo apt install git
-sudo apt install openjdk-17-jre
-sudo apt install wget
-sudo apt install xdg-utils
-sudo apt install python3
-sudo apt install python3-pip
-python3 -m pip install --upgrade pip
-```
-### 1.2.2 Ambiente virtual do Conda
+### 1.2.1 Instalação dos pacotes básicos
 1. Crie e se conecte a um ambiente virtual Conda:
 ```sh
 conda create -n covid-longa python=3.11
 conda activate covid-longa
 ```
-2. Instale os pacotes de bioinformática no ambiente virtual:
+
+2. Digite os seguintes comandos no terminal:
+```sh
+conda install -c conda-forge gxx_linux-64
+conda install -c conda-forge git
+conda install -c conda-forge openjdk=17
+conda install -c conda-forge wget
+```
+<!-- conda install -c conda-forge gxx_linux-64 git openjdk=17 wget -->
+### 1.2.2 Instalação dos pacotes de bioinformática e ciência de dados
+1. Instale os pacotes de bioinformática no ambiente virtual:
 ```sh
 conda install -c bioconda bcftools
 conda install -c bioconda vcftools
@@ -59,29 +56,31 @@ conda install -c bioconda plink2
 conda install -c bioconda admixture
 pip install pyplink
 ```
-3. Instale os pacotes de ciência de dados no ambiente virtual:
+<!-- conda install -c bioconda bcftools vcftools plink plink2 admixture pyplink -->
+2. Instale os pacotes de ciência de dados no ambiente virtual:
 ```sh
 conda install numpy
 conda install pandas
 conda install scikit-learn
 conda install matplotlib
-conda install rpy2
+conda install -c conda-forge rpy2
 conda install -c r r-devtools
 ```
-4. Inicialize o R:
+<!-- conda install numpy pandas scikit-learn matplotlib rpy2 r-devtools -->
+3. Inicialize o R:
 ```sh
 R
 ```
-5. Instale o pacote `hdpca`:
+4. Instale o pacote `hdpca`:
 ```r
 devtools::install_github("cran/hdpca", dependencies = TRUE)
 ```
-6. Saia do R:
+5. Saia do R:
 ```r
 q()
 ```
 
-## 1.3 Instalação das ferramentas de análise de dados e bioinformática
+## 1.3 Instalação das ferramentas não disponíveis no Conda	
 
 Algumas ferramentas científicas necessárias não estão disponíveis no Conda, portanto, você precisará instalá-las manualmente. Para isso, siga os passos abaixo:
 
