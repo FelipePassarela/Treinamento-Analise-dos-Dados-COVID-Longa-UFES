@@ -139,7 +139,7 @@ Agora você pode executar os programas de análise de amostras. Para isso, siga 
 Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo:
 ```sh
 java -jar DISCVSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
-open VCF_quality.html
+xdg-open VCF_quality.html
 ```
 > [!IMPORTANT]
 > O arquivo FASTA `.fa` precisa ter a mesma versão do genoma da chamada de variantes
