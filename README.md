@@ -50,6 +50,8 @@ conda install -c conda-forge wget
 1. Instale os pacotes de bioinformática no ambiente virtual:
 ```sh
 conda install -c bioconda bcftools
+conda install -c bioconda openssl=1.0
+conda install -c bioconda samtools
 conda install -c bioconda vcftools
 conda install -c bioconda plink
 conda install -c bioconda plink2
@@ -135,9 +137,11 @@ bcftools index -t merged.vcf.gz
 Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
 
 ### 2.2.1 Análise de qualidade das amostras
-1. Baixe o genoma de referência:
+1. Baixe e indexe o genoma de referência:
 ```sh
 wget https://ilmn-dragen-giab-samples.s3.amazonaws.com/FASTA/hg38.fa
+samtools dict hg38.fa
+samtools faidx hg38.fa
 ```
 2. Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo:
 ```sh
