@@ -58,6 +58,7 @@ conda install -c bioconda plink2
 conda install -c bioconda admixture
 pip install pyplink
 ```
+<!-- 'conda install -c bioconda openssl=1.0' somente por conta de erro de depêndecia. Talvez não seja necessário no futuro -->
 <!-- conda install -c bioconda bcftools vcftools plink plink2 admixture pyplink -->
 2. Instale os pacotes de ciência de dados no ambiente virtual:
 ```sh
