@@ -1,7 +1,7 @@
 # Treinamento de Análise dos Dados do Projeto COVID Longa UFES
 Esse repositório contém instruções para análise dos dados do projeto COVID Longa da Universidade Federal do Espírito Santo (UFES).
 
-O treinamento abrange a instalação e uso de várias ferramentas de bioinformática e ciência de dados, incluindo Conda, bcftools, vcftools, PLINK, Admixture, e bibliotecas Python como numpy, pandas, scikit-learn, matplotlib e rpy2. 
+O treinamento abrange a instalação e uso de várias ferramentas de bioinformática e ciência de dados, incluindo PLINK, NgsRelate, Admixture, FRAPOSA, e bibliotecas Python como numpy, pandas, scikit-learn, matplotlib e rpy2. 
 
 Todo o treinamento foi realizado no sistema operacional Linux, em específico na distribuição Ubuntu.
 <br>
