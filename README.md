@@ -155,7 +155,7 @@ xdg-open VCF_quality.html
 ### 2.2.2 Análise da relação de parentesco
 1. Filtre as variantes:
 ```sh
-vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
+vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minGQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --max-missing 0.15 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
 ```
 2. Gere o arquivo de relação de parentesco e plote o gráfico:
 <!-- TODO: Adicionar o script para plotar o gráfico da Relação de Parentesco -->
