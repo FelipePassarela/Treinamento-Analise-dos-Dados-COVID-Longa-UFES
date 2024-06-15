@@ -1,4 +1,4 @@
-# Treinamento de Análise dos Dados do Projeto COVID Longa UFES
+# Tutorial para Análise dos Dados do Projeto COVID Longa UFES
 
 Esse repositório contém instruções para análise dos dados do projeto COVID Longa da Universidade Federal do Espírito Santo (UFES).
 
