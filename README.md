@@ -168,7 +168,7 @@ java -jar DISCVRSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_qual
 xdg-open VCF_quality.html
 ```
 
-> [!IMPORTANTE]
+> [!IMPORTANT]
 > O arquivo FASTA `.fa` precisa ter a mesma versão do genoma da chamada de variantes.
 
 #### 2.2.2 Análise da relação de parentesco
@@ -237,7 +237,7 @@ Gere os arquivos de análise de ancestralidade.
 ./fraposa/predstupopu.py --nneighbors 20 --weights uniform outputThousand outputMySamples
 ```
 
-> [!IMPORTANTE]
+> [!IMPORTANT]
 > Se você executou o `FRAPOSA` anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros, você precisa excluir os arquivos intermediários `.dat`, caso contrário o `FRAPOSA` irá gerar um erro.
 
 Plote o gráfico da análise de ancestralidade.
