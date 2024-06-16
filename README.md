@@ -238,7 +238,7 @@ Gere os arquivos de análise de ancestralidade.
 ./fraposa/predstupopu.py --nneighbors 20 --weights uniform outputThousand outputMySamples
 ```
 
-> [!IMPORTANT]
+> [!CAUTION]
 > Se você executou o FRAPOSA anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros, você precisa excluir os arquivos intermediários `.dat`, caso contrário um erro será gerado.
 
 Plote o gráfico da análise de ancestralidade.
