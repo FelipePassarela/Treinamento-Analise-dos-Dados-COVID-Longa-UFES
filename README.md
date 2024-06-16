@@ -1,10 +1,10 @@
-# Tutorial para Análise dos Dados do Projeto COVID Longa UFES
+# Tutorial para Análise Genômica do Projeto COVID Longa
 
-Esse repositório contém instruções para análise dos dados do projeto COVID Longa da Universidade Federal do Espírito Santo (UFES).
+A análise de dados genômicos é crucial para compreender a evolução e o impacto de doenças complexas como a COVID-19. O Projeto COVID Longa visa identificar marcadores genéticos associados à susceptibilida de COVID longa. Este documento oferece um guia prático para configurar o ambiente de trabalho com Conda, instalar pacotes essenciais de bioinformática e ciência de dados, e realizar análises genômicas detalhadas.
 
-O treinamento abrange a instalação e uso de várias ferramentas de bioinformática e ciência de dados, incluindo PLINK, NgsRelate, Admixture, FRAPOSA, e bibliotecas Python como numpy, pandas, scikit-learn, matplotlib e rpy2.
+O tutorial abordará manipulação de arquivos VCF e execução de análise de qualidade, relação de parentesco, mistura genética e ancestralidade. Cada seção está estruturada para garantir replicabilidade e precisão nos resultados.
 
-Todo o treinamento foi realizado no sistema operacional Linux, em específico na distribuição Ubuntu.
+Todo o tutorial é realizado em ambiente Linux. Caso você esteja utilizando Windows, é recomendado instalar o WSL (Windows Subsystem for Linux) para executar os comandos.
 
 ## 1. Instalação das ferramentas
 
@@ -36,9 +36,7 @@ conda --version
 
 ### 1.2 Instalação dos pacotes necessários
 
-Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo.
-
-#### 1.2.1 Instalação dos pacotes básicos
+Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
 
 Crie e se conecte a um ambiente virtual Conda.
 
@@ -47,7 +45,7 @@ conda create -n covid-longa python=3.11
 conda activate covid-longa
 ```
 
-Instale os pacotes básicos no ambiente virtual.
+Instale os pacotes básicos.
 
 ```sh
 conda install -c conda-forge gxx_linux-64
@@ -56,9 +54,7 @@ conda install -c conda-forge openjdk=17
 conda install -c conda-forge wget
 ```
 <!-- conda install -c conda-forge gxx_linux-64 git openjdk=17 wget -->
-#### 1.2.2 Instalação dos pacotes de bioinformática e ciência de dados
-
-Instale os pacotes de bioinformática no ambiente virtual.
+Instale os pacotes de bioinformática.
 
 ```sh
 conda install -c bioconda bcftools
@@ -72,7 +68,7 @@ pip install pyplink
 ```
 <!-- 'conda install -c bioconda openssl=1.0' somente por conta de erro de depêndecia. Talvez não seja necessário no futuro -->
 <!-- conda install -c bioconda bcftools vcftools plink plink2 admixture pyplink -->
-Instale os pacotes de ciência de dados no ambiente virtual.
+Instale os pacotes de ciência de dados.
 
 ```sh
 conda install numpy
@@ -147,9 +143,14 @@ bcftools index -t merged.vcf.gz
 rm vcf_files.txt
 ```
 
-### 2.2. Execução dos programas de análise de amostras
+### 2.2. Execução dos programas de análise genômica
 
-Agora você pode executar os programas de análise de amostras. Para isso, siga os passos abaixo:
+Finalmente, você pode executar os programas de análise genômica. As análises incluem:
+
+- Análise de qualidade das amostras
+- Análise da relação de parentesco
+- Análise de mistura genética
+- Análise de ancestralidade
 
 #### 2.2.1 Análise de qualidade das amostras
 
@@ -238,7 +239,7 @@ Gere os arquivos de análise de ancestralidade.
 ```
 
 > [!IMPORTANT]
-> Se você executou o `FRAPOSA` anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros, você precisa excluir os arquivos intermediários `.dat`, caso contrário o `FRAPOSA` irá gerar um erro.
+> Se você executou o FRAPOSA anteriormente usando o mesmo conjunto de referência ou diferentes configurações de parâmetros, você precisa excluir os arquivos intermediários `.dat`, caso contrário um erro será gerado.
 
 Plote o gráfico da análise de ancestralidade.
 
