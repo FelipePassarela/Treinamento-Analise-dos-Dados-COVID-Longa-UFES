@@ -2,7 +2,7 @@
 
 A análise de dados genômicos é crucial para compreender a evolução e o impacto de doenças complexas como a COVID-19. O Projeto COVID Longa visa identificar marcadores genéticos associados à susceptibilida de COVID longa. Este documento oferece um guia prático para configurar o ambiente de trabalho com Conda, instalar pacotes essenciais de bioinformática e ciência de dados, e realizar análises genômicas detalhadas.
 
-O tutorial abordará manipulação de arquivos VCF e execução de análise de qualidade, relação de parentesco, mistura genética e ancestralidade. Cada seção está estruturada para garantir replicabilidade e precisão nos resultados.
+O tutorial abordará manipulação de arquivos VCF e execução de análise de qualidade de variantes, relação de parentesco, mistura genética e ancestralidade. Cada seção está estruturada para garantir replicabilidade e precisão nos resultados.
 
 Todo o tutorial é realizado em ambiente Linux. Caso você esteja utilizando Windows, é recomendado instalar o WSL (Windows Subsystem for Linux) para executar os comandos.
 
@@ -34,7 +34,7 @@ Feche e abra o terminal novamente. Depois, verifique se o Conda foi instalado co
 conda --version
 ```
 
-### 1.2 Instalação dos pacotes necessários
+### 1.2 Instalação de dependências
 
 Depois de instalar o Conda, você precisará instalar todas as dependências necessárias para executar as ferramentas e scripts de análise de dados. Para isso, siga os passos abaixo:
 
@@ -63,7 +63,6 @@ conda install -c bioconda samtools
 conda install -c bioconda vcftools
 conda install -c bioconda plink
 conda install -c bioconda plink2
-conda install -c bioconda admixture
 pip install pyplink
 ```
 <!-- 'conda install -c bioconda openssl=1.0' somente por conta de erro de depêndecia. Talvez não seja necessário no futuro -->
@@ -97,17 +96,21 @@ Saia do R.
 q()
 ```
 
-### 1.3 Instalação das ferramentas não disponíveis no Conda
+### 1.3 Instalação das ferramentas de análise genômica
 
-Algumas ferramentas científicas necessárias não estão disponíveis no Conda, portanto, você precisará instalá-las manualmente. Para isso, abra um novo terminal no ***diretório raiz do seu projeto*** e siga os passos abaixo.
+Depois de instalar todas as dependências, você pode instalar as ferramentas necessárias para análise genômica. Para isso, abra o terminal no ***diretório raiz do projeto*** e siga os passos abaixo.
 
-Baixe o `DISCVRSeq`.
+#### 1.3.1 Instalação do `DISCVR-seq` Toolkit
+
+`DISCVR-seq` Toolkit é uma coleção diversificada de ferramentas para trabalhar com dados de sequenciamento, desenvolvida e mantida pelo Bimber Lab, construída usando o mecanismo GATK4. Aqui, nós utilizaremos o `DISCVR-seq` para análise de qualidade de variantes. Para instalá-lo, digite o comando abaixo no terminal.
 
 ```sh
 wget https://github.com/BimberLab/DISCVRSeq/releases/download/1.3.62/DISCVRSeq-1.3.62.jar
 ```
 
-Baixe e instale o `NgsRelate`.
+#### 1.3.2 Instalação do `NgsRelate`
+
+o `NgsRelate` é uma ferramenta utilizada para inferir parentesco, coeficientes de endogamia e muitas outras estatísticas resumidas para pares de indivíduos a partir de dados de sequenciamento de próxima geração (NGS). Neste tutorial, utilizaremos o `NgsRelate` para análise de relação de parentesco. Para instalá-lo, digite os comandos abaixo.
 
 ```sh
 git clone --recursive https://github.com/SAMtools/htslib
@@ -116,7 +119,17 @@ cd htslib/;make -j2;cd ../ngsRelate;make HTSSRC=../htslib/
 cd ..
 ```
 
-Baixe o `FRAPOSA`.
+#### 1.3.3 Instalação do `ADMIXTURE`
+
+`ADMIXTURE` é uma ferramenta de software para estimar mistura genética a partir de conjuntos de dados de genótipos SNP multilocus. Para instalá-lo, digite o comando abaixo.
+
+```sh
+conda install -c bioconda admixture
+```
+
+#### 1.3.4 Instalação do `FRAPOSA`
+
+O `FRAPOSA` (Fast and Robutst Ancestry Prediction by using Online singular value decomposition and Shrinkage Adjustment) prevê a ancestralidade de amostras usando análise de componentes principais (PCA) com um painel de referência. Para instalá-lo, digite o comando abaixo.
 
 ```sh
 git clone https://github.com/daviddaiweizhang/fraposa.git
@@ -162,7 +175,7 @@ samtools dict hg38.fa
 samtools faidx hg38.fa
 ```
 
-Gere o arquivo HTML `VCF_quality.html` com a análise de qualidade de variantes e abra no navegador para visualiza-lo.
+Utilizando o `DISCVR-seq`, gere o arquivo HTML `VCF_quality.html` contendo a análise de qualidade de variantes e abra no navegador para visualiza-lo.
 
 ```sh
 java -jar DISCVRSeq-1.3.62.jar VariantQC -R hg38.fa -V merged.vcf.gz -O VCF_quality.html
@@ -180,7 +193,7 @@ Filtre as variantes.
 vcftools --gzvcf merged.vcf.gz --remove-indels --maf 0.05 --minQ 20 --minGQ 20 --minDP 5 --min-alleles 2 --max-alleles 2 --hwe 1e-5 --max-missing 0.15 --recode --stdout | gzip -c > merged_filtered_no_indels.vcf.gz
 ```
 
-Gere o arquivo de relação de parentesco e rode um script para plotar o gráfico.
+Gere o arquivo de relação de parentesco com o `NgsRelate` e rode um script para plotar o gráfico.
 <!-- TODO: Solicitar o script para plotar o gráfico da Relação de Parentesco -->
 ```sh
 ./ngsRelate/ngsRelate -h merged_filtered_no_indels.vcf.gz -O results_relatedness.txt 
@@ -203,7 +216,7 @@ plink --file my_plink --make-bed --out my_plink
 plink --bfile my_plink --geno 0.90 --make-bed --out my_plink_missing
 ```
 
-Gere o arquivo de mistura genética e rode um script para plotar o gráfico.
+Gere o arquivo de mistura genética com o `ADMIXTURE` e rode um script para plotar o gráfico.
 <!-- TODO: Solicitar o script para plotar o gráfico da Mistura Genética -->
 ```sh
 for K in 2 3 4 5; do admixture --cv my_plink_missing.bed $K | tee log${K}.out; done
@@ -230,7 +243,7 @@ plink2 --bfile all_hg38_autosomes allow-extra-chr --set-all-var-ids @:# --make-b
 cat all_hg38.psam | awk '{print $1"\t"$1"\t"$5}' > outputThousand.popu
 ```
 
-Gere os arquivos de análise de ancestralidade.
+Execute o `FRAPOSA` para prever a ancestralidade das amostras de estudo.
 
 ```sh
 ./fraposa/commvar.sh thousandGenomes_renamed my_plink_missing outputThousand outputMySamples
